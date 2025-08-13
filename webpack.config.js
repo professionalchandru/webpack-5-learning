@@ -2,7 +2,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 
 module.exports = {
-  mode: "production",
+  mode: "development",
   entry: "./src/index.js", //entry always need to be relative path
   output: {
     filename: "main.js",
@@ -41,6 +41,10 @@ module.exports = {
       },
       {
         test: /.(avif|png|jpg|jpeg|svg|webp)$/,
+        type: "asset/resource", // For loaders which is part of webpack will use type key name. external loaders use "use" key name.
+      },
+      {
+        test: /.(ttf)$/,
         type: "asset/resource",
       },
     ],
