@@ -1,11 +1,17 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 
+//in case of single page application we don't require a multiple entry and output. react or other library or framework only needs one entry point. from there it will create a dependency graph
+
 module.exports = {
-  mode: "development",
-  entry: "./src/index.js", //entry always need to be relative path
+  mode: "production",
+  entry: {
+    index: "./src/index.js", //entry always need to be relative path
+    explore: "./src/explore.js",
+  },
   output: {
-    filename: "main.js",
+    // filename: "[name].bundle.js", //this is one way to render but not recommendable for prod
+    filename: "[contenthash].bundle.js", //In the video he hasn't explain this contenthash calling method
     path: path.resolve(__dirname, "dist"), // __dirname returns the current working directory & ouput always need a absolute path
     assetModuleFilename: "asset/[hash][ext]", // this will responsible for moving all the img into asset folder inside dist folder
     clean: true, // this is clean the old wanted files or assets during build
