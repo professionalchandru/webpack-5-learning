@@ -1,5 +1,6 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
+const HtmlWebPackPluging = require("html-webpack-plugin");
 
 //in case of single page application we don't require a multiple entry and output. react or other library or framework only needs one entry point. from there it will create a dependency graph
 
@@ -11,12 +12,27 @@ module.exports = {
   },
   output: {
     // filename: "[name].bundle.js", //this is one way to render but not recommendable for prod
-    filename: "[contenthash].bundle.js", //In the video he hasn't explain this contenthash calling method
+    filename: "[name].[contenthash].bundle.js", //In the video he hasn't explain this contenthash calling method
     path: path.resolve(__dirname, "dist"), // __dirname returns the current working directory & ouput always need a absolute path
     assetModuleFilename: "asset/[hash][ext]", // this will responsible for moving all the img into asset folder inside dist folder
     clean: true, // this is clean the old wanted files or assets during build
   },
   plugins: [
+    new HtmlWebPackPluging({
+      template: "./src/index.html", //This will copy the content from the html file and crete a new html file with all dependency
+      chunks: ["index"], //the index.html requires the index.js only. so bringing the key from entry and this chunk will injected to index.html of bundle
+      filename: "index.html", //here im giving the file name because by default this will create a index.html file. but incase of mutiple html file required file name is need
+      inject: "body", //this will decide where to inject script tag. either body or head
+      minify: true, // by default true for prod and false for development
+      // also some other properties can control the page title, fav icon, meta tags and etc.
+    }), //plugings always need to create a instance of it
+    new HtmlWebPackPluging({
+      template: "./src/explore.html",
+      chunks: ["explore"],
+      filename: "explore.html",
+      inject: "body",
+      minify: true,
+    }),
     new MiniCssExtractPlugin({
       filename: "main.css",
     }),
