@@ -1,1 +1,0 @@
-!function(){"use strict";document.querySelector(".pagination"),document.querySelector(".sorting"),document.getElementById("img");var e=document.querySelector(".title");document.querySelector(".explore"),e.innerHTML="This is a explore file"}();
