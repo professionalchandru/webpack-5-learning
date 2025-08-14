@@ -11,6 +11,9 @@ module.exports = {
     index: "./src/index.js", //entry always need to be relative path
     explore: "./src/explore.js",
   },
+  devServer: {
+    port: 3000,
+  },
   output: {
     // filename: "[name].bundle.js", //this is one way to render but not recommendable for prod
     filename: "[name].[contenthash].bundle.js", //In the video he hasn't explain this contenthash calling method
