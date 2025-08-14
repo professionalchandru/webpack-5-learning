@@ -1,5 +1,5 @@
 import { imgComponent } from "../Common";
-import im from "../Assets/image.png";
+import im from "../Assets/images/image.png";
 import { sortingComponent } from "../Common";
 
 sortingComponent.addEventListener("click", () => {

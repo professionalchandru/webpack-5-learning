@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 const HtmlWebPackPluging = require("html-webpack-plugin");
+const CopyWebPackPlugin = require("copy-webpack-plugin");
 
 //in case of single page application we don't require a multiple entry and output. react or other library or framework only needs one entry point. from there it will create a dependency graph
 
@@ -32,6 +33,17 @@ module.exports = {
       filename: "explore.html",
       inject: "body",
       minify: true,
+    }),
+    new CopyWebPackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "src/assets/images"), // copy files from where
+          to: path.resolve(__dirname, "dist", "assets/images"), // paste files to where. also here dist is the destination. there we are creating new folder
+          // context,
+          // transform,
+          // Read all other options from the copywebpack plugin docs
+        },
+      ],
     }),
     new MiniCssExtractPlugin({
       filename: "main.css",
