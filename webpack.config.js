@@ -46,7 +46,7 @@ module.exports = {
       ],
     }),
     new MiniCssExtractPlugin({
-      filename: "main.css",
+      filename: "[name].[contenthash].css",
     }),
   ],
   module: {
@@ -63,7 +63,8 @@ module.exports = {
       {
         test: /\.(css)$/,
         use: [
-          "style-loader",
+          MiniCssExtractPlugin.loader, //Here using the extractplugin loader to extract the css. style-loader basically inject the css in head section with style tag.
+          // "style-loader",
           "css-loader",
         ] /** This is a common way for process the css file in webpack but it is not extracting the css into seperate file
           The loaders run from right to left. css-loader find the css file and do process css files. style-loader is responsible for injecting styles to the dom
@@ -71,7 +72,7 @@ module.exports = {
       },
       {
         test: /\.(scss)$/,
-        use: ["style-loader", "css-loader", "sass-loader"], // sass-loader will identify scss file and convert to css. then css-loader and style-loader do their job
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"], // sass-loader will identify scss file and convert to css. then css-loader and style-loader do their job
       },
       {
         test: /.(avif|png|jpg|jpeg|svg|webp)$/,
