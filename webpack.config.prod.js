@@ -29,6 +29,15 @@ const PATHS = {
  *
  */
 
+/**
+ * Source map:
+ * Source map is helpfull for debugging. while in production the minified files not easy to debug. to debug better way source map is very helpfull.
+ * by enabling a source map debugging is easy but high risk due to code visible for every one. build time and rebuild time and page perfomance become slow.
+ * in development mode source map is enabled by default. or we can use devTool: "eval" to enable source map in dev
+ * in prod mode by default it is disabled. in unavoidable situation go with devTool: "source-map". but the above mentioned drawbacks are there.
+ * one way to handle the security risk is enabled the devtool only for set of ip address.
+ */
+
 module.exports = {
   mode: "production",
   entry: {
@@ -52,6 +61,7 @@ module.exports = {
       chunks: "all", // this split chunks will split the common modules which used across the code. due to this the redundent code will removed.
     },
   },
+  // devtool: "source-map", //But don't use this.
   plugins: [
     new HtmlWebPackPluging({
       template: "./src/index.html", //This will copy the content from the html file and crete a new html file with all dependency
