@@ -16,7 +16,7 @@ module.exports = {
   },
   output: {
     // filename: "[name].bundle.js", //this is one way to render but not recommendable for prod
-    filename: "[name].[contenthash].bundle.js", //In the video he hasn't explain this contenthash calling method
+    filename: "[name].[contenthash].bundle.js",
     path: path.resolve(__dirname, "dist"), // __dirname returns the current working directory & ouput always need a absolute path
     assetModuleFilename: "asset/[hash][ext]", // this will responsible for moving all the img into asset folder inside dist folder
     clean: true, // this is clean the old wanted files or assets during build

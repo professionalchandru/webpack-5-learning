@@ -3,8 +3,31 @@ const path = require("path");
 const HtmlWebPackPluging = require("html-webpack-plugin");
 const CopyWebPackPlugin = require("copy-webpack-plugin");
 const CssMinimizerWebPackPlugin = require("css-minimizer-webpack-plugin");
+const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
+const glob = require("glob");
+
+const PATHS = {
+  src: path.join(__dirname, "src"),
+};
 
 //in case of single page application we don't require a multiple entry and output. react or other library or framework only needs one entry point. from there it will create a dependency graph
+
+/**
+ * TREE SHAKING:
+ * tree shaking is webpack inbuild optimization used by treaserer optimizer. It will use the dependancy graph and do static analysis to identify dead code. Based on the analysis the unused codes are removed from the final bundle. this is called tree shaking or dead code elimination
+ * tree shaking only works if es6 import and export added.
+ * by defualt enabled for production mode
+ * try to minimize ur dependencies
+ * use dynamic imports whenever possible to reduce the initial bundle size.
+ */
+
+/**
+ * Content hashing:
+ * Content hashing is very usefull long term caching.
+ * webpack only updates hash of the file when the content of the file is changed. other wise it brings from the cache.
+ * Same cache will happen in browser also. so the performance of the app will increase
+ *
+ */
 
 module.exports = {
   mode: "production",
@@ -14,7 +37,7 @@ module.exports = {
   },
   output: {
     // filename: "[name].bundle.js", //this is one way to render but not recommendable for prod
-    filename: "[name].[contenthash].bundle.js", //In the video he hasn't explain this contenthash calling method
+    filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"), // __dirname returns the current working directory & ouput always need a absolute path
     assetModuleFilename: "asset/[hash][ext]", // this will responsible for moving all the img into asset folder inside dist folder
     clean: true, // this is clean the old wanted files or assets during build
@@ -22,7 +45,7 @@ module.exports = {
   optimization: {
     minimizer: [
       `...`, // here spreding the default optimization. otherwise the default treasurer optimzation will overwritten by the minimizer array. so js and html code won't be optimized
-      new CssMinimizerWebPackPlugin({}),
+      new CssMinimizerWebPackPlugin({}), // internally it uses nanocss to optimize and remove duplicate css
     ], // cssMinimizer plugin will minimize the css. it is only required in prod mode so that im adding in prod config file
   },
   plugins: [
@@ -54,6 +77,11 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash].css",
+    }),
+    new PurgeCSSPlugin({
+      paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }), // here glob.sync is match the given path syncronosly. for that the path need to given dynamically. also ** means folder and * means file.
+      // only: ["explore"], //using only property will run this purge css on that particular chunk. example here im using explore chnunk
+      // safelist: [".unused-css"], //safelist is a class array where purge css don't apply for those classes.
     }),
   ],
   module: {

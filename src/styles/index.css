@@ -9,7 +9,18 @@
     color: white;
 }
 
+.sorting1 {
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+}
+
 .sorting {
     font-family: "Dancing Script", cursive;
     font-optical-sizing: auto;
+}
+
+.unused-css {
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+    margin: auto;
 }
