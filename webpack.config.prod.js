@@ -2,6 +2,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 const HtmlWebPackPluging = require("html-webpack-plugin");
 const CopyWebPackPlugin = require("copy-webpack-plugin");
+const CssMinimizerWebPackPlugin = require("css-minimizer-webpack-plugin");
 
 //in case of single page application we don't require a multiple entry and output. react or other library or framework only needs one entry point. from there it will create a dependency graph
 
@@ -17,6 +18,12 @@ module.exports = {
     path: path.resolve(__dirname, "dist"), // __dirname returns the current working directory & ouput always need a absolute path
     assetModuleFilename: "asset/[hash][ext]", // this will responsible for moving all the img into asset folder inside dist folder
     clean: true, // this is clean the old wanted files or assets during build
+  },
+  optimization: {
+    minimizer: [
+      `...`, // here spreding the default optimization. otherwise the default treasurer optimzation will overwritten by the minimizer array. so js and html code won't be optimized
+      new CssMinimizerWebPackPlugin({}),
+    ], // cssMinimizer plugin will minimize the css. it is only required in prod mode so that im adding in prod config file
   },
   plugins: [
     new HtmlWebPackPluging({
