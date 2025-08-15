@@ -2,6 +2,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 const HtmlWebPackPluging = require("html-webpack-plugin");
 const CopyWebPackPlugin = require("copy-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 //in case of single page application we don't require a multiple entry and output. react or other library or framework only needs one entry point. from there it will create a dependency graph
 
@@ -21,7 +22,13 @@ module.exports = {
     assetModuleFilename: "asset/[hash][ext]", // this will responsible for moving all the img into asset folder inside dist folder
     clean: true, // this is clean the old wanted files or assets during build
   },
+  optimization: {
+    splitChunks: {
+      chunks: "all", //this will split the common chunks into seperate module. due to that overall bundle size will be reduced.
+    },
+  },
   plugins: [
+    new BundleAnalyzerPlugin({}), //this bundle analyser will open in the new page there we can able to analye the chunks
     new HtmlWebPackPluging({
       template: "./src/index.html", //This will copy the content from the html file and crete a new html file with all dependency
       chunks: ["index"], //the index.html requires the index.js only. so bringing the key from entry and this chunk will injected to index.html of bundle

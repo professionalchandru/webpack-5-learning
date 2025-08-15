@@ -47,6 +47,10 @@ module.exports = {
       `...`, // here spreding the default optimization. otherwise the default treasurer optimzation will overwritten by the minimizer array. so js and html code won't be optimized
       new CssMinimizerWebPackPlugin({}), // internally it uses nanocss to optimize and remove duplicate css
     ], // cssMinimizer plugin will minimize the css. it is only required in prod mode so that im adding in prod config file
+
+    splitChunks: {
+      chunks: "all", // this split chunks will split the common modules which used across the code. due to this the redundent code will removed.
+    },
   },
   plugins: [
     new HtmlWebPackPluging({

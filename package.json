@@ -21,8 +21,10 @@
     "core-js": "^3.45.0",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
+    "dayjs": "^1.11.13",
     "glob": "^11.0.3",
     "html-webpack-plugin": "^5.6.3",
+    "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.9.3",
     "purgecss-webpack-plugin": "^7.0.2",
     "sass-loader": "^16.0.5",
@@ -36,6 +38,7 @@
     "cssnano": "^7.1.0",
     "postcss-loader": "^8.1.1",
     "postcss-pxtorem": "^6.1.0",
-    "sass": "^1.90.0"
+    "sass": "^1.90.0",
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }
